@@ -1,12 +1,18 @@
-# tmp-strblk-nuxt-auth
+# Example sidebar app for Storyblok
 
-> Experiment for nuxt auth with storyblok
+This repository shows an example sidebar app with oauth2 authentication.
+
+It uses an express server to handle the authentication. Please check the file `server.js` and `routes.js`.
 
 ## Requirements
 
-You need to create a ssl tunnel to test the app as Storyblok requires https. A nice tool to start such a tunnel is [ngrok](https://ngrok.com/).
+You need to create a ssl tunnel to test the app as Storyblok requires https.
 
-## Build Setup
+A nice tool to start such a tunnel is [ngrok](https://ngrok.com/).
+
+## Setup
+
+Rename the file .env.example to .env and define CONFIDENTIAL_CLIENT_ID, CONFIDENTIAL_CLIENT_SECRET (from the app settings in Storyblok) and CONFIDENTIAL_CLIENT_REDIRECT_URI (from the ngrok tunnel).
 
 ``` bash
 # install dependencies
@@ -23,4 +29,3 @@ $ yarn start
 $ yarn generate
 ```
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
