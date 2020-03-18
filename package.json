@@ -1,0 +1,29 @@
+{
+  "name": "tmp-strblk-nuxt-auth",
+  "version": "1.0.0",
+  "description": "Experiment for nuxt auth with storyblok",
+  "author": "Samuel Snopko",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.3.6",
+    "@nuxtjs/dotenv": "^1.4.0",
+    "axios": "^0.19.2",
+    "crypto-js": "^4.0.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "nuxt": "^2.0.0",
+    "qs": "^6.9.1",
+    "storyblok-js-client": "^2.0.12",
+    "uuid": "^3.4.0"
+  },
+  "devDependencies": {
+    "@nuxtjs/tailwindcss": "^1.0.0"
+  }
+}
