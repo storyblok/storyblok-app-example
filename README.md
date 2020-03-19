@@ -31,6 +31,8 @@ https://YOUR_ID.ngrok.io/auth/connect/storyblok
 https://YOUR_ID.ngrok.io/auth/callback
 ```
 
+![Oauth settings](https://a.storyblok.com/f/51376/974x347/1eb9f66228/oauth-settings.jpg)
+
 ## Start the nuxt project
 
 ```bash
