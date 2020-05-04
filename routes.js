@@ -5,11 +5,7 @@ const getStoryblokClient = require('./utils/get-storyblok-client')
 
 const router = Router()
 
-router.get('/stories', function (req, res, next) {
-  res.json([])
-})
-
-router.get('/callback', async function (req, res, next) {
+router.get('/callback', async function (req, res) {
   const { space_id, code } = req.query
 
   try {
@@ -36,9 +32,9 @@ router.get('/callback', async function (req, res, next) {
   }
 })
 
-router.get('/explore/:space_id/:resource', async function (req, res, next) {
+router.get('/explore/:space_id/:resource', async function (req, res) {
   const { space_id, resource } = req.params
-  const client = getStoryblokClient(req.session.access_token)
+  const client = getStoryblokClient(req.session)
 
   try {
     const response = await client.get(`spaces/${space_id}/${resource}`)
@@ -46,7 +42,63 @@ router.get('/explore/:space_id/:resource', async function (req, res, next) {
     res.json(response.data)
   } catch (e) {
     console.log(e)
-    res.json({error: e.message})
+    res.json({error: e.message, response: e.response.data})
+  }
+})
+
+router.put('/explore/:space_id/:resource/:id', async function (req, res) {
+  const { space_id, resource, id } = req.params
+  const client = getStoryblokClient(req.session)
+
+  try {
+    const response = await client.put(`spaces/${space_id}/${resource}/${id}`, req.body)
+
+    res.json(response.data)
+  } catch (e) {
+    console.log(e)
+    res.json({error: e.message, response: e.response.data})
+  }
+})
+
+router.post('/explore/:space_id/:resource', async function (req, res) {
+  const { space_id, resource } = req.params
+  const client = getStoryblokClient(req.session)
+  console.log('body: ', req.body)
+
+  try {
+    const response = await client.post(`spaces/${space_id}/${resource}`, req.body)
+
+    res.json(response.data)
+  } catch (e) {
+    console.log(e.message)
+    res.json({error: e.message, response: e.response.data})
+  }
+})
+
+router.delete('/explore/:space_id/:resource/:id', async function (req, res) {
+  const { space_id, resource, id } = req.params
+  const client = getStoryblokClient(req.session)
+
+  try {
+    const response = await client.put(`spaces/${space_id}/${resource}/${id}`, req.body)
+
+    res.json(response.data)
+  } catch (e) {
+    console.log(e)
+    res.json({error: e.message, response: e.response.data})
+  }
+})
+
+router.get('/user_info', async function (req, res) {
+  const client = getStoryblokClient(req.session)
+
+  try {
+    const response = await client.get('oauth/user_info')
+
+    res.json(response.data)
+  } catch (e) {
+    console.log(e)
+    res.json({error: e.message, response: e.response.data})
   }
 })
 

@@ -1,11 +1,40 @@
 <template>
   <div class="container">
-    <div>
-      <logo class="mx-auto" />
+    <div v-if="loading">
+      Loading...
+    </div>
+    <div v-else>
       <h1 class="title">
-        storyblok-nuxt-auth
+        Welcome
       </h1>
-      {{stories}}
+      <h2 class="subtitle">
+        Logged in as {{ userInfo.user.friendly_name }}
+      </h2>
+
+      <hr>
+
+      Create new:
+
+      <form @submit.prevent="create"
+            class="mt-3 mb-3">
+        <div class="form-group">
+          <label>Name</label>
+          <input class="form-control" type="text" v-model="story.name" />
+        </div>
+        <div class="form-group">
+          <label>Slug</label>
+          <input class="form-control" type="text" v-model="story.slug" />
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+
+      <hr>
+
+      Stories (<a href="#" @click.prevent="loadStories">Reload</a>):
+      <div v-for="story in stories"
+           :key="story.id">
+        {{ story.name }} ({{ story.full_slug }})
+      </div>
     </div>
   </div>
 </template>
@@ -20,21 +49,42 @@ export default {
   },
   data() {
     return {
-      stories: []
+      loading: true,
+      stories: [],
+      story: {name: '', slug: ''},
+      userInfo: {
+        user: {}
+      }
     }
   },
   mounted() {
     if (window.top == window.self) {
-      window.location.assign('https://app.storyblok.com/oauth/app_redirect')
+      window.location.assign('https://localhost:3002/oauth/app_redirect')
     } else {
       this.loadStories()
+      this.loadUserInfo()
     }
   },
   methods: {
+    create() {
+      this.loading = true
+      axios.post(`/auth/explore/${this.$route.query.space_id}/stories`, {story: this.story})
+        .then((res) => {
+          this.loadStories()
+        })
+    },
     loadStories() {
+      this.loading = true
       axios.get(`/auth/explore/${this.$route.query.space_id}/stories`)
         .then((res) => {
+          this.loading = false
           this.stories = res.data.stories
+        })
+    },
+    loadUserInfo() {
+      axios.get(`/auth/user_info`)
+        .then((res) => {
+          this.userInfo = res.data
         })
     }
   }
@@ -43,7 +93,7 @@ export default {
 
 <style>
 .container {
-  margin: 0 auto;
+  margin: 20px auto;
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -58,7 +108,7 @@ export default {
   font-weight: 300;
   font-size: 100px;
   color: #35495e;
-  letter-spacing: 1px;
+  margin-top: 20px;
 }
 
 .subtitle {
@@ -67,9 +117,5 @@ export default {
   color: #526488;
   word-spacing: 5px;
   padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
 }
 </style>
