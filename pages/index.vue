@@ -59,7 +59,7 @@ export default {
   },
   mounted() {
     if (window.top == window.self) {
-      window.location.assign('https://localhost:3002/oauth/app_redirect')
+      window.location.assign('https://app.storyblok.com/oauth/app_redirect')
     } else {
       this.loadStories()
       this.loadUserInfo()
