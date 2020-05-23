@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
-    "@nuxtjs/dotenv": "^1.4.0",
     "axios": "^0.19.2",
     "axios-auth-refresh": "^2.2.5",
     "body-parser": "^1.19.0",
